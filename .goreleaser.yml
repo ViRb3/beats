@@ -1,0 +1,63 @@
+env:
+  - CGO_ENABLED=0
+builds:
+  - #
+    id: filebeat
+    dir: filebeat
+    binary: filebeat
+    ldflags: [-s -w -extldflags '-static']
+    goos: [linux, windows]
+    goarch: [386, amd64, arm, arm64]
+    goarm: [6, 7]
+  - #
+    id: metricbeat
+    dir: metricbeat
+    binary: metricbeat
+    ldflags: [-s -w -extldflags '-static']
+    goos: [linux, windows]
+    goarch: [386, amd64, arm, arm64]
+    goarm: [6, 7]
+  - #
+    id: winlogbeat
+    dir: winlogbeat
+    binary: winlogbeat
+    ldflags: [-s -w -extldflags '-static']
+    goos: [windows]
+    goarch: [386, amd64, arm, arm64]
+    goarm: [6, 7]
+  - #
+    id: auditbeat
+    dir: auditbeat
+    binary: auditbeat
+    ldflags: [-s -w -extldflags '-static']
+    goos: [linux, windows]
+    goarch: [386, amd64, arm, arm64]
+    goarm: [6, 7]
+  - #
+    id: heartbeat
+    dir: heartbeat
+    binary: heartbeat
+    ldflags: [-s -w -extldflags '-static']
+    goos: [linux, windows]
+    goarch: [386, amd64, arm, arm64]
+    goarm: [6, 7]
+  - #
+    id: journalbeat
+    dir: journalbeat
+    binary: journalbeat
+    ldflags: [-s -w -extldflags '-static']
+    goos: [linux]
+    goarch: [386, amd64, arm, arm64]
+    goarm: [6, 7]
+
+archives:
+  - #
+    format: binary
+    files:
+      - none*
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  skip: true

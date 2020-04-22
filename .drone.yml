@@ -1,0 +1,27 @@
+kind: pipeline
+name: build
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: fetch
+    image: alpine/git
+    commands:
+      - git fetch origin refs/tags/"$DRONE_TAG":refs/tags/"$DRONE_TAG"
+
+  - name: release
+    image: golang:1.14
+    environment:
+      GITHUB_TOKEN:
+        from_secret: github_token
+    commands:
+      - mkdir -p /tmp/gopath/src/github.com/elastic/
+      - ln -s "$PWD" /tmp/gopath/src/github.com/elastic/beats
+      - export GOPATH="/tmp/gopath"
+      - curl -sL https://git.io/goreleaser | bash
+
+trigger:
+  event:
+    - tag
